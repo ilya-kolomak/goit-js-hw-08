@@ -1,6 +1,6 @@
 import VimeoPlayer from '@vimeo/player';
 import throttle from 'lodash.throttle';
-
+initPage();
 const iframe = document.querySelector('iframe');
 
 const player = new VimeoPlayer(iframe);
@@ -20,3 +20,4 @@ function initPage() {
     currentTime = 0;
   }
 }
+player.setCurrentTime(localStorage.getItem('LOCALSTORAGE_KEY'));
