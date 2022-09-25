@@ -13,7 +13,7 @@ function onPlay({ seconds }) {
 }
 function initPage() {
   try {
-    const currentTime = player.setCurrentTime(
+    let currentTime = player.setCurrentTime(
       localStorage.getItem('LOCALSTORAGE_KEY')
     );
   } catch {
