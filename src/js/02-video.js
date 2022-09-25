@@ -11,14 +11,11 @@ player.on('timeupdate', throttle(onPlay, 1000));
 function onPlay({ seconds }) {
   localStorage.setItem('LOCALSTORAGE_KEY', seconds);
 }
-function initPage() {
-  try {
-    const currentTime = player.setCurrentTime(
-      localStorage.getItem('LOCALSTORAGE_KEY')
-    );
-  } catch {
-    currentTime = 0;
+const initPage = () => {
+  let saveData = localStorage.getItem('LOCALSTORAGE_KEY');
+  if (saveData) {
+    player.setCurrentTime(saveData);
   }
-}
+};
 player.setCurrentTime(localStorage.getItem('LOCALSTORAGE_KEY'));
 initPage();
