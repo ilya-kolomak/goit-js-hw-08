@@ -1,26 +1,25 @@
 import throttle from 'lodash.throttle';
+
 const formRef = document.querySelector('.feedback-form');
 const LOCALE_STORAGE_KEY = 'contact-form-key';
-import { save, load, remove } from './storage';
-
-initPage();
+import localStorage from './storage';
 
 const onFormInput = event => {
   const { name, value } = event.target;
 
-  let saveData = load(LOCALE_STORAGE_KEY);
+  let saveData = localStorage.load(LOCALE_STORAGE_KEY);
   saveData = saveData ? saveData : {};
 
   saveData[name] = value;
 
-  save(LOCALE_STORAGE_KEY, saveData);
+  localStorage.save(LOCALE_STORAGE_KEY, saveData);
 };
 
 const throttledOnFormInput = throttle(onFormInput, 500);
 formRef.addEventListener('input', throttledOnFormInput);
 
 function initPage() {
-  const saveData = load(LOCALE_STORAGE_KEY);
+  const saveData = localStorage.load(LOCALE_STORAGE_KEY);
 
   if (!saveData) {
     return;
@@ -29,6 +28,8 @@ function initPage() {
     formRef.elements[name].value = value;
   });
 }
+
+initPage();
 
 const handleSubmit = event => {
   event.preventDefault();
@@ -39,7 +40,7 @@ const handleSubmit = event => {
 
   console.log({ email: email.value, message: message.value });
   event.currentTarget.reset();
-  remove(LOCALE_STORAGE_KEY);
+  localStorage.remove(LOCALE_STORAGE_KEY);
 };
 
 formRef.addEventListener('submit', handleSubmit);
